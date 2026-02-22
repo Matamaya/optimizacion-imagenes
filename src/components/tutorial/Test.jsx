@@ -1,0 +1,62 @@
+import { useState } from "react";
+
+// Tarea extra: Añadir más preguntas
+const questions = [
+    {
+        question: "¿Cuál es el formato más eficiente para imágenes en la web?",
+        options: ["JPEG", "PNG", "WebP", "AVIF"],
+        answer: "AVIF",
+    },
+    {
+        question: "¿Qué herramienta permite diseñar interfaces web?",
+        options: ["Photoshop", "Figma", "GIMP"],
+        answer: "Figma",
+    },
+    {
+        question: "¿Para qué sirve el Intersection Observer?",
+        options: ["Para optimizar SVGs", "Para aplicar Lazy Loading detectando la visibilidad", "Para dar estilo a botones"],
+        answer: "Para aplicar Lazy Loading detectando la visibilidad",
+    },
+    {
+        question: "¿Qué hook de React hemos usado para guardar la referencia del Canvas?",
+        options: ["useState", "useEffect", "useRef"],
+        answer: "useRef",
+    }
+];
+
+const Test = () => {
+    const [selectedAnswers, setSelectedAnswers] = useState([]);
+
+    const handleSelect = (index, option) => {
+        const newAnswers = [...selectedAnswers];
+        newAnswers[index] = option;
+        setSelectedAnswers(newAnswers);
+    };
+
+    const checkAnswers = () => {
+        const correct = selectedAnswers.filter((ans, i) => ans === questions[i].answer).length;
+        alert(`Has respondido correctamente ${correct} de ${questions.length}`);
+    };
+
+    return (
+        <div className="p-6 bg-blue-50 dark:bg-gray-800 border border-blue-200 dark:border-gray-600 rounded shadow-lg mt-10">
+            <h2 className="text-2xl font-bold mb-4">Test Final</h2>
+            {questions.map((q, i) => (
+                <div key={i} className="mb-4">
+                    <p className="font-semibold">{q.question}</p>
+                    {q.options.map((opt) => (
+                        <button
+                            key={opt}
+                            className={`mr-2 px-4 py-2 mt-2 rounded transition shadow ${selectedAnswers[i] === opt ? "bg-blue-500 text-white" : "bg-white text-black dark:bg-gray-600 dark:text-white"}`}
+                            onClick={() => handleSelect(i, opt)}
+                        >
+                            {opt}
+                        </button>
+                    ))}
+                </div>
+            ))}
+            <button onClick={checkAnswers} className="bg-green-500 hover:bg-green-600 text-white font-bold px-6 py-2 mt-4 rounded shadow-md w-full">Verificar respuestas finales</button>
+        </div>
+    );
+};
+export default Test;
